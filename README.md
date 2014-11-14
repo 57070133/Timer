@@ -1,4 +1,4 @@
-timer
+Timer
 =====
 
-countdown clock + stopwatch
+stopwatch aka timer w/ laps feature
