@@ -1,19 +1,30 @@
+'''
+Timer(Stopwatch) with laps system display in both digital label and analog clock.
+'''
 from Tkinter import *
 import time
 
 class Timer():
     def __init__(self):
+        '''
+        main
+        '''
         self.start = 0.0
         self.elapsed = 0.0
         self.timedis = StringVar()
-        self.widget()
-
+        
     def count(self):
+        '''
+        count() --> makes timer update every 50 millisecs // name after part for using in stop
+        '''
         self.elapsed = time.time() - self.start
         self.display(self.elapsed)
         self.counter = self.after(50, self.count)
 
     def display(self, time):
+        '''
+        display(time) --> set floating point format into 00:00:00:00 format
+        '''
         hrs = int(time / 3600)
         mins = int((time - hrs*3600.0) /60 )
         secs = int(time - hrs*3600.0 - mins*60.0)
