@@ -9,9 +9,18 @@ class Timer():
         '''
         main
         '''
+        self.root = Tk()
+        self.root.title('Timer')
         self.start = 0.0
         self.elapsed = 0.0
         self.timedis = StringVar()
+        self.run = False
+        
+        lab= Label(self.root, textvariable=self.timedis)
+        self.display(self.elapsed)
+        lab.pack(pady=15, padx=30)
+        
+        self.root.mainloop()
         
     def count(self):
         '''
