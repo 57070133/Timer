@@ -26,6 +26,8 @@ class Timer():
         '''
         count() --> makes timer update every 50 millisecs // name after part for using in stop
         '''
+        if not self.run: 
+            self.run = True
         self.elapsed = time.time() - self.start
         self.display(self.elapsed)
         self.counter = self.after(50, self.count)
