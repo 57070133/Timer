@@ -21,6 +21,7 @@ class Timer():
         lab.pack(pady=15, padx=30)
         
         Button(self.root, text='Start', command=self.start_time).pack(side=BOTTOM)
+        Button(self.root, text='Stop', command=self.stop_time).pack(side=BOTTOM)
         
         self.root.mainloop()
         
@@ -48,5 +49,10 @@ class Timer():
                 self.count()
                 self.run = True
                 
+    def stop_time(self):
+        if  self.run:
+                self.root.after_cancel(self.counter)
+                self.display(self.elapsed)
+                self.run = False
 Timer()
 
