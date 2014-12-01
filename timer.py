@@ -20,6 +20,8 @@ class Timer():
         self.display(self.elapsed)
         lab.pack(pady=15, padx=30)
         
+        Button(self.root, text='Start', command=self.start_time).pack(side=BOTTOM)
+        
         self.root.mainloop()
         
     def count(self):
@@ -42,4 +44,11 @@ class Timer():
         secs = int(time - hrs*3600.0 - mins*60.0)
         msecs = int((time - hrs*3600.0 - mins*60.0 - secs)*100)
         self.timedis.set('%02d:%02d:%02d:%02d' % (hrs, mins, secs, msecs))
+        
+    def start_time(self):
+        if  not self.run:
+                self.start = time.time() - self.elapsed
+                self.count()
+                self.run = True
+
 
