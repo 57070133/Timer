@@ -25,6 +25,7 @@ class Timer():
         
         Button(self.root, text='Start', command=self.start_time).pack(side=BOTTOM)
         Button(self.root, text='Stop', command=self.stop_time).pack(side=BOTTOM)
+        Button(self.root, text='Laps', command=self.laps).pack(side=ฺBOTTOM)
         
         self.root.mainloop()
         
@@ -57,5 +58,9 @@ class Timer():
             self.root.after_cancel(self.counter)
             self.display(self.elapsed)
             self.run = False
+            
+    def laps(self):
+        self.lapdis.insert(END, (self.timedis.get() + "\n"))
+        
 Timer()
 
