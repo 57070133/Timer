@@ -18,14 +18,16 @@ class Timer():
         
         lab= Label(self.root, textvariable=self.timedis)
         self.display(self.elapsed)
-        lab.pack(pady=15, padx=30)
-        
+        lab.pack(pady=30, padx=80)
+
         self.lapdis = Text(self.root, height=10, width=20)
         self.lapdis.pack()
         
-        Button(self.root, text='Start', command=self.start_time).pack(side=BOTTOM)
-        Button(self.root, text='Stop', command=self.stop_time).pack(side=BOTTOM)
-        Button(self.root, text='Laps', command=self.laps).pack(side=ฺBOTTOM)
+        Button(self.root, text='Start', command=self.start_time).pack(side=TOP)
+        Button(self.root, text='Laps', command=self.laps).pack(side=TOP)
+        Button(self.root, text='Stop', command=self.stop_time).pack(side=TOP)
+        Button(self.root, text='Reset', command=self.reset_time).pack(side=TOP)
+
         
         self.root.mainloop()
         
@@ -48,19 +50,28 @@ class Timer():
         self.timedis.set('%02d:%02d:%02d:%02d' % (hrs, mins, secs, msecs))
         
     def start_time(self):
+        '''start button'''
         if  not self.run:
             self.start = time.time() - self.elapsed
             self.count()
             self.run = True
                 
     def stop_time(self):
+        '''stop button'''
         if  self.run:
             self.root.after_cancel(self.counter)
             self.display(self.elapsed)
             self.run = False
-            
+
+    def reset_time(self):
+        '''reset button'''
+        self.root.after_cancel(self.counter)
+        self.elapsed =  0.0
+        self.display(self.elapsed)
+        self.run = False
+
     def laps(self):
+        '''create laps time'''
         self.lapdis.insert(END, (self.timedis.get() + "\n"))
-        
 Timer()
 
