@@ -10,6 +10,7 @@ class Timer():
         main
         '''
         self.root = Tk()
+        self.root.geometry("800x300")
         self.root.title('Timer')
         self.start = 0.0
         self.elapsed = 0.0
@@ -18,15 +19,21 @@ class Timer():
         
         lab= Label(self.root, textvariable=self.timedis)
         self.display(self.elapsed)
-        lab.pack(pady=30, padx=80)
-
-        self.lapdis = Text(self.root, height=10, width=20)
-        self.lapdis.pack()
+        lab.place(relx=0.15,rely=0.1, anchor=CENTER)
         
-        Button(self.root, text='Start', command=self.start_time).pack(side=TOP)
-        Button(self.root, text='Laps', command=self.laps).pack(side=TOP)
-        Button(self.root, text='Stop', command=self.stop_time).pack(side=TOP)
-        Button(self.root, text='Reset', command=self.reset_time).pack(side=TOP)
+        self.lapdis = Text(self.root, height=10, width=20)
+        self.lapdis.place(relx=0.05,rely=0.2)
+        
+        self.sb = Scrollbar(self.root)
+        self.sb.config(command=self.lapdis.yview)
+        self.lapdis.config(yscrollcommand=self.sb.set)
+        self.sb.place(relx=0.25,rely=0.2, relheight=0.55)
+        
+        
+        Button(self.root, text='Start', command=self.start_time).place(relx=0.05,rely=0.8)
+        Button(self.root, text='Laps', command=self.laps).place(relx=0.1,rely=0.8)
+        Button(self.root, text='Stop', command=self.stop_time).place(relx=0.15,rely=0.8)
+        Button(self.root, text='Reset', command=self.reset_time).place(relx=0.2,rely=0.8)
 
         
         self.root.mainloop()
@@ -73,5 +80,6 @@ class Timer():
     def laps(self):
         '''create laps time'''
         self.lapdis.insert(END, (self.timedis.get() + "\n"))
+
 Timer()
 
