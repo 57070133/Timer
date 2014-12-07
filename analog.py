@@ -3,7 +3,7 @@ import time
 import math
 
 secs = 0
-deg = 0
+deg = 270
 x = 0
 y = 0
 
@@ -26,7 +26,7 @@ class Analog():
 
     def draw(self):
         global x,y
-        canvas = Canvas(self.root, width=300, height=200)
+        canvas = Canvas(self.root, width=300, height=200, bg='red')
         canvas.create_oval(5,5,195,195,fill='white',outline='black',width=5)
         canvas.create_line(100,100,x,y,fill='black',width=5)
         canvas.place(relx=0.175,rely=0.1)
@@ -34,9 +34,9 @@ class Analog():
 
     def hands(self,deg):
         global x, y, canvas
-        x = (100 * math.sin(math.radians(deg)))
-        y = (100 * math.sin(math.radians(90 - deg)))
-        self.bbb.set('%02d:%02d' % (x, y))
+        x = 100 + int(100 * math.cos(math.radians(deg)))
+        y =  100 + int(100 * math.sin(math.radians(deg)))
+        self.bbb.set('%02d:%02d---%02d' % (x, y, deg))
 
     def tick(self):
         global secs, deg
