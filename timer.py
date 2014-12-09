@@ -2,13 +2,19 @@
 Timer(Stopwatch) with laps system display in both digital label and analog clock.
 '''
 from Tkinter import *
-import time
+import time, math
+
+deg = 0
+x = 0
+y = 0
+r = 100
 
 class Timer():
     def __init__(self):
         '''
         main
         '''
+        global r
         self.root = Tk()
         self.root.minsize(500,300)
         self.root.maxsize(500,300)
@@ -30,6 +36,9 @@ class Timer():
         self.sb.config(command=self.lapdis.yview)
         self.lapdis.config(yscrollcommand=self.sb.set)
         self.sb.place(relx=0.35,rely=0.2, relheight=0.55)
+
+        self.canvas = Canvas(self.root, width=r*2, height=r*2)
+        self.canvas.place(relx=0.5,rely=0.075)
         
         Button(self.root, text='Start', command=self.start_time).place(relx=0.05,rely=0.8)
         Button(self.root, text='Laps', command=self.laps).place(relx=0.15,rely=0.8)
@@ -44,8 +53,13 @@ class Timer():
         '''
         count() --> makes timer update every 50 millisecs // name after part for using in stop
         '''
+        global deg
         self.elapsed = time.time() - self.start
+        deg = 90 - (self.elapsed * 6)
+        
+        self.hand_point(deg)
         self.display(self.elapsed)
+        self.draw()
         self.counter = self.root.after(50, self.count)
 
     def display(self, time):
@@ -70,6 +84,7 @@ class Timer():
         if  self.run:
             self.root.after_cancel(self.counter)
             self.display(self.elapsed)
+            self.draw()
             self.run = False
 
     def reset_time(self):
@@ -88,5 +103,17 @@ class Timer():
         '''clear laps data from textbox'''
         self.lapdis.delete(1.0, END)
 
-Timer()
+    def hand_point(self, deg):
+        global x, y
+        x = r + int(r * math.cos(math.radians(deg)))
+        y = r -  int(r  * math.sin(math.radians(deg)))
 
+    def draw(self):
+        global x, y, r
+        self.canvas.delete(ALL)
+        self.canvas.create_oval(0,0,r*2,r*2,fill='white',outline='black',width=2)
+        self.canvas.create_line(100,100,x,y,fill='black',width=1)
+
+
+
+Timer()
