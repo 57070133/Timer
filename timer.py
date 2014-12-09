@@ -84,7 +84,6 @@ class Timer():
         if  self.run:
             self.root.after_cancel(self.counter)
             self.display(self.elapsed)
-            self.draw()
             self.run = False
 
     def reset_time(self):
@@ -92,6 +91,9 @@ class Timer():
         self.root.after_cancel(self.counter)
         self.elapsed =  0.0
         self.display(self.elapsed)
+        self.x = self.r
+        self.y = 0
+        self.draw()
         self.run = False
 
     def laps(self):
@@ -115,4 +117,3 @@ class Timer():
 
 
 Timer()
-
