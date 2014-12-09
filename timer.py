@@ -32,11 +32,13 @@ class Timer():
         self.sb.place(relx=0.35,rely=0.2, relheight=0.55)
 
         self.deg = 0
-        self.x = 0
-        self.y = 0
         self.r = 100
+        self.x = self.r
+        self.y = 0
 
-        self.canvas = Canvas(self.root, width=self.r*2, height=self.r*2)
+
+        self.canvas = Canvas(self.root, width=self.r*3, height=self.r*3)
+        self.draw()
         self.canvas.place(relx=0.5,rely=0.075)
         
         Button(self.root, text='Start', command=self.start_time).place(relx=0.05,rely=0.8)
@@ -107,8 +109,8 @@ class Timer():
 
     def draw(self):
         self.canvas.delete(ALL)
-        self.canvas.create_oval(0,0,200,200,fill='white',outline='black',width=2)
-        self.canvas.create_line(100,100,self.x,self.y,fill='black',width=1)
+        self.canvas.create_oval(10,10,(self.r*2+10),(self.r*2+10),fill='white',outline='black',width=2)
+        self.canvas.create_line((self.r+10),(self.r+10),(self.x+10),(self.y+10),fill='black',width=1)
 
 
 
