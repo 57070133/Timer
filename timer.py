@@ -41,11 +41,10 @@ class Timer():
         self.draw()
         self.canvas.place(relx=0.5,rely=0.075)
         
-        Button(self.root, text='Start', command=self.start_time).place(relx=0.05,rely=0.8)
-        Button(self.root, text='Laps', command=self.laps).place(relx=0.15,rely=0.8)
-        Button(self.root, text='Stop', command=self.stop_time).place(relx=0.25,rely=0.8)
-        Button(self.root, text='Clear', command=self.clear_laps).place(relx=0.35,rely=0.8)
-        Button(self.root, text='Reset', command=self.reset_time).place(relx=0.45,rely=0.8)
+        Button(self.root, text='Start/Stop', command=self.start_time).place(relx=0.05,rely=0.8)
+        Button(self.root, text='Laps', command=self.laps).place(relx=0.2,rely=0.8)
+        Button(self.root, text='Reset', command=self.reset_time).place(relx=0.3,rely=0.8)
+        Button(self.root, text='Clear', command=self.clear_laps).place(relx=0.4,rely=0.8)
 
         
         self.root.mainloop()
@@ -73,15 +72,12 @@ class Timer():
         self.timedis.set('%02d:%02d:%02d:%02d' % (hrs, mins, secs, msecs))
         
     def start_time(self):
-        '''start button'''
+        '''start/stop button'''
         if  not self.run:
             self.start = time.time() - self.elapsed
             self.count()
             self.run = True
-                
-    def stop_time(self):
-        '''stop button'''
-        if  self.run:
+        elif  self.run:
             self.root.after_cancel(self.counter)
             self.display(self.elapsed)
             self.run = False
