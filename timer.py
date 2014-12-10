@@ -14,6 +14,7 @@ class Timer():
         self.root.maxsize(500,300)
         self.root.geometry("500x300")
         self.root.title('Timer')
+        
         self.start = 0.0
         self.elapsed = 0.0
         self.timedis = StringVar()
@@ -31,7 +32,6 @@ class Timer():
         self.lapdis.config(yscrollcommand=self.sb.set)
         self.sb.place(relx=0.35,rely=0.2, relheight=0.55)
 
-        self.deg = 0
         self.r = 100
         self.x = self.r
         self.y = 0
@@ -54,9 +54,9 @@ class Timer():
         count() --> makes timer update every 50 millisecs // name after part for using in stop
         '''
         self.elapsed = time.time() - self.start
-        self.deg = 90 - (self.elapsed * 6)
+        deg = 90 - (self.elapsed * 6)
         
-        self.hand_point(self.deg)
+        self.hand_point(deg)
         self.display(self.elapsed)
         self.draw()
         self.counter = self.root.after(50, self.count)
@@ -107,9 +107,8 @@ class Timer():
 
     def draw(self):
         self.canvas.delete(ALL)
-        self.canvas.create_oval(10,10,(self.r*2+10),(self.r*2+10),fill='white',outline='black',width=2)
-        self.canvas.create_line((self.r+10),(self.r+10),(self.x+10),(self.y+10),fill='black',width=1)
-
-
+        margin = 20
+        self.canvas.create_oval(margin,margin,self.r*2+margin,self.r*2+margin,fill='white',outline='black')
+        self.canvas.create_line(self.r+margin,self.r+margin,self.x+margin,self.y+margin)
 
 Timer()
