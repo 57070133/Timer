@@ -55,8 +55,7 @@ class Timer():
         '''
         self.elapsed = time.time() - self.start
         deg = 90 - (self.elapsed * 6)
-        
-        self.hand_point(deg)
+        self.hand_point(self.r, deg)
         self.display(self.elapsed)
         self.draw()
         self.counter = self.root.after(50, self.count)
@@ -101,14 +100,25 @@ class Timer():
         '''clear laps data from textbox'''
         self.lapdis.delete(1.0, END)
 
-    def hand_point(self, deg):
-        self.x = self.r + int(self.r * math.cos(math.radians(deg)))
-        self.y = self.r -  int(self.r  * math.sin(math.radians(deg)))
+    def hand_point(self, r, deg):
+        self.x = r + int(r * math.cos(math.radians(deg)))
+        self.y = r -  int(r  * math.sin(math.radians(deg)))
+        return (self.x, self.y)
 
     def draw(self):
         self.canvas.delete(ALL)
         margin = 20
+        step = 30
         self.canvas.create_oval(margin,margin,self.r*2+margin,self.r*2+margin,fill='white',outline='black')
         self.canvas.create_line(self.r+margin,self.r+margin,self.x+margin,self.y+margin)
+        for i in xrange(12):
+            angle = i*step
+            temp = self.hand_point((self.r+10)*1.05, 90 - angle)
+            self.canvas.create_text(temp[0]+5, temp[1]+5,text=str(i*5))
+        for i in xrange(12):
+            angle = i*step
+            temp = self.hand_point((self.r), angle)
+            temp2 = self.hand_point((self.r+10)*0.8, angle)
+            self.canvas.create_line(temp[0]+20, temp[1]+20,temp2[0]+32, temp2[1]+32)
 
 Timer()
