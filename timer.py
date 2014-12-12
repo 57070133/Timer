@@ -109,16 +109,24 @@ class Timer():
         self.canvas.delete(ALL)
         margin = 20
         step = 30
+        step2 = 6
         self.canvas.create_oval(margin,margin,self.r*2+margin,self.r*2+margin,fill='white',outline='black')
-        self.canvas.create_line(self.r+margin,self.r+margin,self.x+margin,self.y+margin)
+        self.canvas.create_oval(margin*5.8,margin*5.8,self.r*2-margin*3.8,self.r*2-margin*3.8,fill='red', outline='red')
+        self.canvas.create_line(self.r+margin,self.r+margin,self.x+margin,self.y+margin, fill='red')
         for i in xrange(12):
             angle = i*step
-            temp = self.hand_point((self.r+10)*1.05, 90 - angle)
-            self.canvas.create_text(temp[0]+5, temp[1]+5,text=str(i*5))
+            temp = self.hand_point(self.r*1.1, 90 - angle)
+            self.canvas.create_text(temp[0]+10, temp[1]+10,text=str(i*5))
         for i in xrange(12):
             angle = i*step
-            temp = self.hand_point((self.r), angle)
-            temp2 = self.hand_point((self.r+10)*0.8, angle)
-            self.canvas.create_line(temp[0]+20, temp[1]+20,temp2[0]+32, temp2[1]+32)
+            temp = self.hand_point(self.r, angle)
+            temp2 = self.hand_point(self.r*0.8, angle)
+            self.canvas.create_line(temp[0]+margin, temp[1]+margin,temp2[0]+40, temp2[1]+40, )
+        for i in xrange(60):
+            angle = i*step2
+            if i % 5 != 0:
+                temp = self.hand_point(self.r, angle)
+                temp2 = self.hand_point(self.r*0.9, angle)
+                self.canvas.create_line(temp[0]+margin, temp[1]+margin,temp2[0]+30, temp2[1]+30 )
 
 Timer()
