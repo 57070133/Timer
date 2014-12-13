@@ -10,9 +10,8 @@ class Timer():
         main
         '''
         self.root = Tk()
-        self.root.minsize(500,300)
-        self.root.maxsize(500,300)
-        self.root.geometry("500x300")
+        self.root.geometry("350x700")
+        self.root.resizable(width=FALSE, height=FALSE)
         self.root.title('Timer')
         
         self.start = 0.0
@@ -20,31 +19,32 @@ class Timer():
         self.timedis = StringVar()
         self.run = False
 
+        self.r = 100
+        self.margin = 20
+        self.x = self.r
+        self.y = 0
+
         self.display(self.elapsed)
-        lab= Label(self.root, textvariable=self.timedis)
-        lab.place(relx=0.2,rely=0.1, anchor=CENTER)
+        lab= Label(self.root, textvariable=self.timedis, font=('OCRAStd', 20), fg='black')
+        lab.place(relx=0.5,rely=0.4, anchor=CENTER)
         
-        self.lapdis = Text(self.root, height=10, width=20)
-        self.lapdis.place(relx=0.05,rely=0.2)
+        self.lapdis = Text(self.root, height=10, width=18, font=('BatangChe', 16))
+        self.lapdis.place(relx=0.2,rely=0.6)
         
         self.sb = Scrollbar(self.root)
         self.sb.config(command=self.lapdis.yview)
         self.lapdis.config(yscrollcommand=self.sb.set)
-        self.sb.place(relx=0.35,rely=0.2, relheight=0.55)
+        self.sb.place(relx=0.75,rely=0.6, relheight=0.305)
 
-        self.r = 100
-        self.x = self.r
-        self.y = 0
-
-
-        self.canvas = Canvas(self.root, width=self.r*3, height=self.r*3)
+        self.canvas = Canvas(self.root, width=self.r*2+self.margin*2, height=self.r*2+self.margin*2)
         self.draw()
-        self.canvas.place(relx=0.5,rely=0.075)
-        
-        Button(self.root, text='Start/Stop', command=self.start_time).place(relx=0.05,rely=0.8)
-        Button(self.root, text='Laps', command=self.laps).place(relx=0.2,rely=0.8)
-        Button(self.root, text='Reset', command=self.reset_time).place(relx=0.3,rely=0.8)
-        Button(self.root, text='Clear', command=self.clear_laps).place(relx=0.4,rely=0.8)
+        self.canvas.place(relx=0.5,rely=0.2, anchor=CENTER)
+
+        self.ss_button = Button(self.root, text='Start', command=self.start_time)
+        self.ss_button.place(relx=0.2,rely=0.5)
+        Button(self.root, text='Laps', command=self.laps).place(relx=0.45,rely=0.5)
+        Button(self.root, text='Reset', command=self.reset_time).place(relx=0.7,rely=0.5)
+        Button(self.root, text='Clear', command=self.clear_laps).place(relx=0.45,rely=0.92)
 
         
         self.root.mainloop()
@@ -75,10 +75,12 @@ class Timer():
         if  not self.run:
             self.start = time.time() - self.elapsed
             self.count()
+            self.ss_button.config(text='Stop')
             self.run = True
         elif  self.run:
             self.root.after_cancel(self.counter)
             self.display(self.elapsed)
+            self.ss_button.config(text='Start')
             self.run = False
 
     def reset_time(self):
@@ -107,7 +109,7 @@ class Timer():
 
     def draw(self):
         self.canvas.delete(ALL)
-        margin = 20
+        margin = self.margin
         step = 30
         step2 = 6
         self.canvas.create_oval(margin,margin,self.r*2+margin,self.r*2+margin,fill='white',outline='black')
