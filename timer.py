@@ -91,6 +91,7 @@ class Timer():
         self.x = self.r
         self.y = 0
         self.draw()
+        self.ss_button.config(text='Start')
         self.run = False
 
     def laps(self):
