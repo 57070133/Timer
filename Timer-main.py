@@ -31,7 +31,7 @@ class Timer():
         lab2.place(relx=0.5,rely=0.59, anchor=CENTER)
 
         #text box for contains laps
-        self.lapdis = Text(self.root, height=10, width=18, font=('BatangChe', 16), bd=0, state='disable')
+        self.lapdis = Text(self.root, height=10, width=18, font=('BatangChe', 16), state='disable')
         self.lapdis.place(relx=0.2,rely=0.62)
 
         #scrollbar for laps textbox
