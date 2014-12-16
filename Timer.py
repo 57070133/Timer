@@ -30,7 +30,7 @@ class Timer(object):
         self.root.mainloop()
         
     def widget(self):
-        '''widget part, contains all GUI'''
+        '''widget part, contains all UI'''
         #digital time display
         self.timedis .set(self.display(self.elapsed))
         self.laptemp .set(self.display(self.elapsed))
@@ -135,7 +135,8 @@ class Timer(object):
     def start_time(self):
         '''start/stop button'''
         if  not self.run:
-            self.start = time.time() - self.elapsed #if cut " - self.elapsed" part, the clock will automatically went back to 0
+             #if cut " - self.elapsed" part, the clock will automatically went back to 0
+            self.start = time.time() - self.elapsed
             self.lapstart = time.time()
             self.count()
             self.ss_button.config(text='Stop', fg='red')
@@ -185,10 +186,12 @@ class Timer(object):
         margin = self.margin
         step = 30
         step2 = 6
+        #clockface
         self.canvas.create_oval(margin, margin, self.r*2 + margin, self.r*2 + margin\
                                 , fill='black', outline='green')
         self.canvas.create_oval(margin*5.8, margin*5.8, self.r*2 - margin*3.8, self.r*2 - margin*3.8\
                                 , fill='red', outline='red')
+        #clockhand
         self.canvas.create_line(self.r + margin, self.r + margin, self.x + margin, self.y + margin, fill='red')
 
         for i in xrange(12): #draw the numbers around the clock
