@@ -6,13 +6,17 @@ import time, math
 
 class Timer(object):
     def __init__(self):
+        '''main window'''
         self.root = Tk()
+        self.root.config(bg='black')
         self.root.geometry("350x700")
         self.root.resizable(width=FALSE, height=FALSE)
         self.root.title('Timer')
         
         self.start = 0.0
+        self.lapstart = 0.0
         self.elapsed = 0.0
+        self.laptime = 0.0
         self.timedis = StringVar()
         self.laptemp = StringVar()
         self.run = False
@@ -30,25 +34,26 @@ class Timer(object):
         #digital time display
         self.timedis .set(self.display(self.elapsed))
         self.laptemp .set(self.display(self.elapsed))
-        lab= Label(self.root, textvariable=self.timedis, font=('OCRAStd', 20))
-        lab.place(relx=0.48,rely=0.42, anchor=CENTER)
+        self.lab= Label(self.root, textvariable=self.timedis, font=('OCRAStd', 20), fg='green', bg='black')
+        self.lab.place(relx=0.48,rely=0.42, anchor=CENTER)
 
         #laps label
-        lab2= Label(self.root, text='Laps', font=('OCRAStd', 12))
-        lab2.place(relx=0.5,rely=0.59, anchor=CENTER)
+        self.lab2= Label(self.root, text='Laps', font=('OCRAStd', 12), bg='black', fg='green')
+        self.lab2.place(relx=0.5,rely=0.59, anchor=CENTER)
 
         #text box for contains laps
-        self.lapbox = Text(self.root, height=9, width=27, font=('BatangChe', 15),bd=0, state='disable', bg='#F0F0ED')
+        self.lapbox = Text(self.root, height=9, width=27, font=('BatangChe', 15),bd=0, state='disable', bg='black', fg='green')
         self.lapbox.place(relx=0.1,rely=0.62)
 
         #scrollbar for laps textbox
         self.sb = Scrollbar(self.root)
-        self.sb.config(command=self.lapbox.yview)
+        self.sb.config(command=self.lapbox.yview, bg='black')
         self.lapbox.config(yscrollcommand=self.sb.set)
         self.sb.place(relx=0.89,rely=0.62, relheight=0.26)
 
         #canvas for analog clock
-        self.canvas = Canvas(self.root, width=self.r*2+self.margin*2, height=self.r*2+self.margin*2)
+        self.canvas = Canvas(self.root, width=self.r*2+self.margin*2, height=self.r*2+self.margin*2\
+                             , bg='black', highlightbackground='black')
         self.draw()
         self.canvas.place(relx=0.5,rely=0.2, anchor=CENTER)
 
@@ -61,23 +66,27 @@ class Timer(object):
         self.help_menu.add_command(label='About...', command=self.about)
         
         #button        
-        self.ss_button = Button(self.root, text='Start', command=self.start_time)
+        self.ss_button = Button(self.root, text='Start', command=self.start_time, bg='black', fg='green', activebackground='black')
         self.ss_button.place(relx=0.2,rely=0.47)
-        Button(self.root, text='Laps', command=self.laps).place(relx=0.45,rely=0.47)
-        Button(self.root, text='Reset', command=self.reset_time).place(relx=0.7,rely=0.47)
-        Button(self.root, text='Clear', command=self.clear_laps).place(relx=0.45,rely=0.92)
+        Button(self.root, text='Laps', command=self.laps, bg='black', fg='green', activebackground='black'\
+               , activeforeground='white').place(relx=0.45,rely=0.47)
+        Button(self.root, text='Reset', command=self.reset_time,bg='black', fg='green', activebackground='black'\
+               , activeforeground='white' ).place(relx=0.7,rely=0.47)
+        Button(self.root, text='Clear', command=self.clear_laps, bg='black', fg='green', activebackground='black'\
+               , activeforeground='white').place(relx=0.45,rely=0.92)
 
     def about(self):
         '''about window'''
         self.window = Tk()
         self.window.title('About')
+        self.window.config(bg='black')
         self.window.geometry('300x300')
-        self.lab = Label(self.window, text='Timer', font=('OCRAStd', 20))
+        self.lab = Label(self.window, text='Timer', font=('OCRAStd', 20), fg='green', bg='black')
         self.lab.place(relx=0.1, rely=0.1)
         self.msg = "Timer project"+"\n - - - - - - - - - - - - - "\
               +"\n\nThis project is dedicated to PROBLEM SOLVING IN INFORMATION TECHNOLOGY(PSIT) course at IT Faculty, KMITL."\
               + "\n\nBy  #57070129 Salinee T."+"\n    #57070133 Suchanun C."
-        self.text = Text(self.window, height=15, width=30, bd=0, wrap=WORD, bg='#F0F0ED')
+        self.text = Text(self.window, height=15, width=30, bd=0, wrap=WORD, fg='green', bg='black')
         self.text.insert(END, self.msg)
         self.text.place(relx=0.1, rely=0.3)
         self.text.configure(state='disabled')
@@ -87,12 +96,13 @@ class Timer(object):
         '''user guide window'''
         self.window = Tk()
         self.window.title('User Guide')
+        self.window.config(bg='black')
         self.window.geometry('450x150')
-        self.lab = Label(self.window, text='How to use', font=('OCRAStd', 20))
+        self.lab = Label(self.window, text='How to use', font=('OCRAStd', 20), fg='green', bg='black')
         self.lab.place(relx=0.1, rely=0.1)
         self.msg = "\nUse 'Start' button to start and stop the timer.\n"+"Use 'Laps' button to create laps.\n"\
               +"Use 'Reset' button to reset the timer.\n"+"Use 'Clear' button to clear laps.\n"
-        self.text = Text(self.window, height=15, width=50, bd=0, wrap=WORD, bg='#F0F0ED')
+        self.text = Text(self.window, height=15, width=50, bd=0, wrap=WORD, fg='green', bg='black')
         self.text.insert(END, self.msg)
         self.text.place(relx=0.05, rely=0.3)
         self.text.configure(state='disabled')
@@ -133,13 +143,13 @@ class Timer(object):
         elif  self.run:
             self.root.after_cancel(self.counter)
             self.timedis .set(self.display(self.elapsed))
-            self.ss_button.config(text='Start')
+            self.ss_button.config(text='Start', fg='green')
             self.run = False
 
     def reset_time(self):
         '''reset button'''
         self.root.after_cancel(self.counter)
-        self.ss_button.config(text='Start', fg='black')
+        self.ss_button.config(text='Start', fg='green')
         self.elapsed =  0.0
         self.laptime = 0.0
         self.timedis.set(self.display(self.elapsed))
@@ -159,15 +169,15 @@ class Timer(object):
 
     def clear_laps(self):
         '''clear laps data from textbox'''
-        self.lapdis.configure(state='normal')
-        self.lapdis.delete(1.0, END)
-        self.lapdis.configure(state='disabled')
+        self.lapbox.configure(state='normal')
+        self.lapbox.delete(1.0, END)
+        self.lapbox.configure(state='disabled')
 
     def hand_point(self, r, deg):
         '''calculate where the clock hand should be point to'''
-        self.x = r + int(r * math.cos(math.radians(deg)))
-        self.y = r -  int(r  * math.sin(math.radians(deg)))
-        return (self.x, self.y)
+        self.px = r + int(r * math.cos(math.radians(deg)))
+        self.py = r - int(r  * math.sin(math.radians(deg)))
+        return (self.px, self.py)
 
     def draw(self):
         '''draw the clock face and hand'''
@@ -175,24 +185,26 @@ class Timer(object):
         margin = self.margin
         step = 30
         step2 = 6
-        self.canvas.create_oval(margin, margin, self.r*2 + margin, self.r*2 + margin)
-        self.canvas.create_oval(margin*5.8, margin*5.8, self.r*2 - margin*3.8, self.r*2 - margin*3.8, fill='red', outline='red')
+        self.canvas.create_oval(margin, margin, self.r*2 + margin, self.r*2 + margin\
+                                , fill='black', outline='green')
+        self.canvas.create_oval(margin*5.8, margin*5.8, self.r*2 - margin*3.8, self.r*2 - margin*3.8\
+                                , fill='red', outline='red')
         self.canvas.create_line(self.r + margin, self.r + margin, self.x + margin, self.y + margin, fill='red')
 
         for i in xrange(12): #draw the numbers around the clock
             angle = i*step
             temp = self.hand_point(self.r*1.1, 90 - angle)
-            self.canvas.create_text(temp[0] + 10, temp[1] + 10, text=str(i*5))
+            self.canvas.create_text(temp[0] + 10, temp[1] + 10, text=str(i*5), fill='green')
         for i in xrange(12): #draw a long secs mark
             angle = i*step
             temp = self.hand_point(self.r, angle)
             temp2 = self.hand_point(self.r*0.8, angle)
-            self.canvas.create_line(temp[0] + margin, temp[1] + margin, temp2[0] + 40, temp2[1] + 40)
+            self.canvas.create_line(temp[0] + margin, temp[1] + margin, temp2[0] + 40, temp2[1] + 40, fill='green')
         for i in xrange(60): #draw a secs mark
             angle = i*step2
             if i % 5 != 0:
                 temp = self.hand_point(self.r, angle)
                 temp2 = self.hand_point(self.r*0.9, angle)
-                self.canvas.create_line(temp[0] + margin, temp[1] + margin, temp2[0] + 30, temp2[1] + 30)
+                self.canvas.create_line(temp[0] + margin, temp[1] + margin, temp2[0] + 30, temp2[1] + 30, fill='green')
                 
 Timer()
